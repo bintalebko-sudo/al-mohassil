@@ -27,7 +27,6 @@ jobs:
 
       - name: Build APK
         run: |
-          npm install -g @capacitor/cli
           npm install
           npx cap sync android
           cd android
