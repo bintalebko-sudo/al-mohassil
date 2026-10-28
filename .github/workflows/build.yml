@@ -19,11 +19,12 @@ jobs:
         with:
           node-version: '18'
 
-      - name: Build APK Directly
+      - name: Build Android APK
         run: |
-          npm install -g @capacitor/cli @capacitor/core
           mkdir -p www
           echo "<html><body><h1>Al-Mohassil</h1></body></html>" > www/index.html
+          npm init -y
+          npm install @capacitor/core @capacitor/cli @capacitor/android
           npx cap init "Al-Mohassil" "com.almohassil.app" --web-dir www --yes
           npx cap add android
           npx cap sync android
