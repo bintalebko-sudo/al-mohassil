@@ -11,21 +11,18 @@ jobs:
     runs-on: ubuntu-22.04
 
     steps:
-      - name: Checkout Code
-        uses: actions/checkout@v3
+      - name: Clone Repository Direct
+        run: |
+          git clone https://github.com/${{ github.repository }}.git .
 
-      - name: Set up Environment
-        uses: actions/setup-node@v3
-        with:
-          node-version: '18'
-
-      - name: Install JDK 17
+      - name: Setup And Build APK
         run: |
           sudo apt-get update
-          sudo apt-get install -y openjdk-17-jdk
-
-      - name: Build APK Process
-        run: |
+          sudo apt-get install -y nodejs npm openjdk-17-jdk git
+          
+          node -v
+          java -version
+          
           npm install
           npx @capacitor/cli copy android
           cd android
