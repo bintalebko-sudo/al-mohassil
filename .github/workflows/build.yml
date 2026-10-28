@@ -25,10 +25,10 @@ jobs:
         with:
           node-version: '18'
 
-      - name: Build APK
+      - name: Build APK Clean
         run: |
           npm install
-          npx cap sync android
+          npx @capacitor/cli copy android
           cd android
           chmod +x gradlew
           ./gradlew assembleDebug
