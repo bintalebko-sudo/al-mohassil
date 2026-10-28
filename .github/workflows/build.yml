@@ -14,16 +14,6 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 18
-
-      - name: Install and Build Web App
-        run: |
-          npm install --legacy-peer-deps
-          npm run build
-
       - name: Setup Java JDK
         uses: actions/setup-java@v4
         with:
@@ -33,19 +23,27 @@ jobs:
       - name: Setup Android SDK
         uses: android-actions/setup-android@v3
 
-      - name: Add Capacitor Android and Sync
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      - name: Create Capacitor Project and Build
         run: |
-          npm install @capacitor/core @capacitor/cli @capacitor/android --legacy-peer-deps
-          npx cap add android || true
+          npm i -g @capacitor/cli
+          mkdir www
+          cp index.html www/ 2>/dev/null || true
+          npx cap init "Al-Mohassil" "com.almohassil.app" --web-dir www --yes
+          npx cap add android
           npx cap sync android
 
-      - name: Build Debug APK with Gradle
+      - name: Build APK with Gradle
         run: |
           cd android
           chmod +x gradlew
           ./gradlew assembleDebug
 
-      - name: Upload APK Artifact
+      - name: Upload APK File
         uses: actions/upload-artifact@v4
         with:
           name: Al-Mohassil-APK
