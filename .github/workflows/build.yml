@@ -11,13 +11,14 @@ jobs:
     runs-on: ubuntu-22.04
 
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v4
+      - name: Clone Repository
+        run: |
+          git clone https://github.com/${{ github.repository }}.git .
 
-      - name: Install Environment and Build APK
+      - name: Install Environment and Build
         run: |
           sudo apt-get update
-          sudo apt-get install -y nodejs npm openjdk-17-jdk
+          sudo apt-get install -y nodejs npm openjdk-17-jdk git
           node -v
           java -version
           
