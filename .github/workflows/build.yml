@@ -14,21 +14,21 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Build Android APK
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y openjdk-17-jdk
-          java -version
-          
-          node -v
-          npm -v
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'zulu'
+          java-version: '17'
 
-          mkdir -p www
-          echo "<html><body><h1>Al-Mohassil</h1></body></html>" > www/index.html
-          npm init -y
-          npm install @capacitor/core @capacitor/cli @capacitor/android
-          npx cap init "Al-Mohassil" "com.almohassil.app" --web-dir www --yes
-          npx cap add android
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Build APK
+        run: |
+          npm install -g @capacitor/cli
+          npm install
           npx cap sync android
           cd android
           chmod +x gradlew
